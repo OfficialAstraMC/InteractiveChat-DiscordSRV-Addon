@@ -386,8 +386,8 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.LoneDev6</groupId>
-            <artifactId>API-ItemsAdder</artifactId>
+            <groupId>dev.lone</groupId>
+            <artifactId>api-itemsadder</artifactId>
             <version>3.4.1d</version>
             <scope>provided</scope>
         </dependency>
