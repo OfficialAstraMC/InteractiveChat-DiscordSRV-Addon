@@ -892,7 +892,7 @@ public class OutboundToDiscordEvents implements Listener {
         List<DiscordMessageContent> contents = pair.getFirst();
         InteractionHandler interactionHandler = pair.getSecond();
 
-        DiscordImageEvent discordImageEvent = new DiscordImageEvent(channel, textOriginal, text, contents, false, true);
+        DiscordImageEvent discordImageEvent = new DiscordImageEvent(channel, textOriginal, " ", contents, false, true);
         Bukkit.getPluginManager().callEvent(discordImageEvent);
         Debug.debug("discordMessageSent sending to discord, Cancelled: " + discordImageEvent.isCancelled());
         if (discordImageEvent.isCancelled()) {
