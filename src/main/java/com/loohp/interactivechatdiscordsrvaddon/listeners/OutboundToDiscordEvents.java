@@ -892,13 +892,13 @@ public class OutboundToDiscordEvents implements Listener {
         List<DiscordMessageContent> contents = pair.getFirst();
         InteractionHandler interactionHandler = pair.getSecond();
 
-        DiscordImageEvent discordImageEvent = new DiscordImageEvent(channel, textOriginal, " ", contents, false, true);
+        DiscordImageEvent discordImageEvent = new DiscordImageEvent(channel, textOriginal, "‍", contents, false, true);
         Bukkit.getPluginManager().callEvent(discordImageEvent);
         Debug.debug("discordMessageSent sending to discord, Cancelled: " + discordImageEvent.isCancelled());
         if (discordImageEvent.isCancelled()) {
             message.editMessage(discordImageEvent.getOriginalMessage()).queue();
         } else {
-            text = discordImageEvent.getNewMessage();
+            text = "‍";
             MessageAction action = message.editMessage(text);
             List<MessageEmbed> embeds = new ArrayList<>();
             int i = 0;
