@@ -892,13 +892,13 @@ public class OutboundToDiscordEvents implements Listener {
         List<DiscordMessageContent> contents = pair.getFirst();
         InteractionHandler interactionHandler = pair.getSecond();
 
-        DiscordImageEvent discordImageEvent = new DiscordImageEvent(channel, textOriginal, "‍", contents, false, true);
+        DiscordImageEvent discordImageEvent = new DiscordImageEvent(channel, textOriginal, text, contents, false, true);
         Bukkit.getPluginManager().callEvent(discordImageEvent);
         Debug.debug("discordMessageSent sending to discord, Cancelled: " + discordImageEvent.isCancelled());
         if (discordImageEvent.isCancelled()) {
             message.editMessage(discordImageEvent.getOriginalMessage()).queue();
         } else {
-            text = "‍";
+            text = discordImageEvent.getNewMessage();
             MessageAction action = message.editMessage(text);
             List<MessageEmbed> embeds = new ArrayList<>();
             int i = 0;
@@ -977,7 +977,7 @@ public class OutboundToDiscordEvents implements Listener {
         if (discordImageEvent.isCancelled()) {
             WebhookUtil.editMessage(channel, String.valueOf(messageId), discordImageEvent.getOriginalMessage(), (Collection<? extends MessageEmbed>) null);
         } else {
-            text = discordImageEvent.getNewMessage();
+            text = "‍";
             List<MessageEmbed> embeds = new ArrayList<>();
             Map<String, InputStream> attachments = new LinkedHashMap<>();
             int i = 0;
