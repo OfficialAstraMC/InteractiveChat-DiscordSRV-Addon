@@ -145,6 +145,7 @@ public class OutboundToDiscordEvents implements Listener {
     public static final Comparator<DiscordDisplayData> DISPLAY_DATA_COMPARATOR = Comparator.comparing(each -> each.getPosition());
     public static final Int2ObjectMap<DiscordDisplayData> DATA = Int2ObjectMaps.synchronize(new Int2ObjectLinkedOpenHashMap<>());
     public static final IntFunction<Pattern> DATA_PATTERN = i -> Pattern.compile("<ICD=" + i + "\\\\?>");
+	public static final Pattern LOOKUP_PATTERN = Pattern.compile("(?:^|\\[[^\\]]*\\])([^\\[\\]]+)(?:\\[|$)");
     public static final Int2ObjectMap<AttachmentData> RESEND_WITH_ATTACHMENT = Int2ObjectMaps.synchronize(new Int2ObjectLinkedOpenHashMap<>());
     private static final IDProvider DATA_ID_PROVIDER = new IDProvider();
     private static final Map<UUID, Component> DEATH_MESSAGE = new ConcurrentHashMap<>();
@@ -898,7 +899,11 @@ public class OutboundToDiscordEvents implements Listener {
         if (discordImageEvent.isCancelled()) {
             message.editMessage(discordImageEvent.getOriginalMessage()).queue();
         } else {
-            text = discordImageEvent.getNewMessage();
+			if (LOOKUP_PATTERN.matcher(text).find()) {
+                text = discordImageEvent.getNewMessage();
+			} else {
+				text = "";
+			};
             MessageAction action = message.editMessage(text);
             List<MessageEmbed> embeds = new ArrayList<>();
             int i = 0;
